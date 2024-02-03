@@ -1,3 +1,3 @@
 # Class-Drink-shop-API-Backend
 
-IVe created two Python classes: Order and Drink. and a list of valid bases and flavrors as class variables in Drink, to ensure they don't duplicate in memory with each new drink instance.
+For Sprint 2 I added a Base, Flavors, # Flavors, set falvor, size, size and flavor tests to clean up last weeks sprint and prepare for sprint 2 feature requests
