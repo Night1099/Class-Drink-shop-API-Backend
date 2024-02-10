@@ -8,32 +8,57 @@ from Drink import Drink
 
 class Order:
     # The Order class acts as a container for multiple Drink instances, representing a single customer's order.
+    
+    tax_rate = 0.0725  # Tax rate of 7.25%
 
     def __init__(self):
-       #  Initializes the Order with an empty list.
+        #  Initializes the Order with an empty list.
         self._items = []
 
-    def get_items(self):
-        # Provides access to the current list of items in the order.
-        return self._items
-
-    def get_num_items(self):
-        # Retrieve the counts of items currently in the order, summarizes without need of details of items.
-        return len(self._items)
-
-    def get_total(self):
-        # Computes the total cost of the order by iterating over each item in the order and summing their individual totals.
-        return sum(item.get_total() for item in self._items)
-
-    def add_item(self, drink):
+    def add_item(self, item):
         # Adds a Drink item to the order. This method ensures that only items of type Drink can be added
-        if isinstance(drink, Drink):
-            self._items.append(drink)
-        else:
-            raise TypeError("Item must be of type Drink")
+        if not isinstance(item, Drink):
+            raise ValueError("Only Drink instances can be added")
+        self._items.append(item)
 
     def remove_item(self, index):
         # Removes an item from the order based on its position.
         if index < 0 or index >= len(self._items):
-            raise IndexError("Item index is out of range")
+            raise IndexError("Item index out of range")
         del self._items[index]
+
+    def get_items(self):
+        # Provides access to the current list of items in the order.
+        return self._items
+    
+    def get_num_items(self):
+        # Retrieve the counts of items currently in the order, summarizes without need of details of items.
+        return len(self._items)
+
+    def get_total_before_tax(self):
+        # Calculates the total cost of the order before tax.
+        return sum(item.get_total() for item in self._items)
+
+    def get_total_tax(self):
+        # Calculates the total tax for the order.
+        return self.get_total_before_tax() * Order.tax_rate
+
+    def get_total(self):
+        # Computes the total cost of the order by iterating over each item in the order and summing their individual totals.
+        return self.get_total_before_tax() + self.get_total_tax()
+
+    def generate_receipt(self):
+        # Generates a receipt for the order.
+        receipt = {
+            'items': [],
+            'total_before_tax': self.get_total_before_tax(),
+            'tax': self.get_total_tax(),
+            'total': self.get_total()
+        }
+        for item in self._items:
+            receipt['items'].append({
+                'base': item.base,
+                'size': item.get_size(),
+                'total_cost': item.get_total()
+            })
+        return receipt

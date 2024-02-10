@@ -7,8 +7,8 @@ class TestOrder(unittest.TestCase):
     def setUp(self):
         # Initialize an Order object and two Drink objects for testing
         self.order = Order()
-        self.drink1 = Drink('water')  # Adjusting to match the Drink class provided
-        self.drink2 = Drink('sbrite')
+        self.drink1 = Drink('water', 'small') # Adjusting to match the Drink class provided
+        self.drink2 = Drink('sbrite', 'small')
 
     def test_add_item(self):
         # Test adding a drink to the order and verifying it's included
@@ -24,8 +24,8 @@ class TestOrder(unittest.TestCase):
         # Test the total cost of the order is correct after adding two drinks
         self.order.add_item(self.drink1)
         self.order.add_item(self.drink2)
-        expected_total = self.drink1.get_total() + self.drink2.get_total()
-        self.assertEqual(self.order.get_total(), expected_total)
+        expected_total = self.drink1.get_total() + self.drink2.get_total() + (self.drink1.get_total() + self.drink2.get_total()) * Order.tax_rate
+        self.assertAlmostEqual(self.order.get_total(), expected_total)
 
 if __name__ == '__main__':
     unittest.main()
