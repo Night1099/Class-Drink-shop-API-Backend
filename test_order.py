@@ -55,7 +55,7 @@ class TestOrderWithFood(unittest.TestCase):
         corndog = Food('Corndog', 2.00)
         order.add_item(corndog)
         # Verify the food item is included in the order's items list.
-        self.assertIn(corndog, order.items)
+        self.assertIn(corndog, order.get_items())
 
     def test_order_total_with_food_and_drinks(self):
         # Test the total price of an order containing both food items and drinks.
