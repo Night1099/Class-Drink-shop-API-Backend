@@ -6,6 +6,7 @@ This system is capable of adding, removing, and calculating the total cost of an
 
 from Drink import Drink
 from Food import Food
+from IceStorm import IceStorm
 
 class Order:
     # The Order class acts as a container for multiple Drink instances, representing a single customer's order.
@@ -18,8 +19,8 @@ class Order:
 
     def add_item(self, item):
         # Adds a Drink item to the order. This method ensures that only items of type Drink can be added
-        if not isinstance(item, (Drink, Food)):
-            raise ValueError("Only Drink and Food instances can be added")
+        if not isinstance(item, (Drink, Food, IceStorm)):
+            raise ValueError("Only Drink, Food, and IceStorm instances can be added")
         self._items.append(item)
 
     def remove_item(self, index):
@@ -68,5 +69,11 @@ class Order:
                     'name': item.get_name(),
                     'toppings': item.get_toppings(),
                     'total_cost': item.get_total_price()
+                })
+            elif isinstance(item, IceStorm):
+                receipt['items'].append({
+                    'flavor': item.get_base(),
+                    'toppings': item.toppings,
+                    'total_cost': item.get_total()
                 })
         return receipt

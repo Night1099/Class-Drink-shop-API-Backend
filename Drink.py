@@ -3,7 +3,7 @@ A blueprint for creating drink objects
 """
 
 class Drink:
-        # Define valid bases and flavors for drinks, ensuring that only acceptable inputs are used for drink creation.
+    # Define valid bases and flavors for drinks, ensuring that only acceptable inputs are used for drink creation.
     valid_bases = ['water', 'sbrite', 'pokeacola', 'Mr. Salt', 'hill fog', 'leaf wine']
     valid_flavors = ['lemon', 'cherry', 'strawberry', 'mint', 'blueberry', 'lime']
     
@@ -12,7 +12,7 @@ class Drink:
     flavor_price = 0.15 # Additional cost for each flavor added to the drink.
 
     def __init__(self, base, size='small'):  # Default size set to 'small' if not provided
-                # Initialize a Drink instance, enforcing validation on base and size to ensure they are valid options.
+        # Initialize a Drink instance, enforcing validation on base and size to ensure they are valid options.
         self.base = base.lower()
         self.size = size.lower()
         if self.base not in Drink.valid_bases:
@@ -55,9 +55,14 @@ class Drink:
         return len(self.flavors)
 
     def set_flavors(self, flavors):
-         # Set the flavors for the drink, replacing any existing flavors
+        # Set the flavors for the drink, replacing any existing flavors
         # Validates each flavor against the list of valid flavors
         for flavor in flavors:
             if flavor.lower() not in Drink.valid_flavors:
                 raise ValueError(f"Invalid flavor: {flavor}")
         self.flavors = [flavor.lower() for flavor in flavors]
+
+    def __str__(self):
+        # Return a string representation of the Drink object
+        flavor_str = ", ".join(self.flavors) if self.flavors else "no flavors"
+        return f"{self.size} {self.base} with {flavor_str}"
